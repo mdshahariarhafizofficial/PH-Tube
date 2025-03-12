@@ -52,29 +52,44 @@ const  displayCategories = (categories) => {
 // ! ---------- Display Load Videos ---------------
 const displayVideos = (videos) => {
     // Get video Section
-    const videoSection = document.getElementById('video-section');
-
+    const videoSection = document.getElementById('video-section');    
     videos.forEach((video)=>{
         const div = document.createElement('div');
+        // console.log(video.authors[0].verified);
+        const checkVerified = very => {
+            if (very === true) {
+                return "block"
+            }
+            else{
+                return "hidden"
+            }
+        };
+        // console.log(video.authors[0].verified);
         div.innerHTML = `
-            <div class="card bg-base-100 shadow-sm">
-                <figure>
-                    <img
-                    src="${video.thumbnail}" />
-                </figure>
-                <div class="card-body">
-                    <h2 class="card-title">Card Title</h2>
-                    <p>A card component has a figure, a body part, and inside body there are title and actions parts</p>
-                    <div class="card-actions justify-end">
-                    <button class="btn btn-primary">Buy Now</button>
-                </div>
+            <div class="bg-base-100">
+                    <figure class="relative">
+                        <img class="w-full h-[200px] object-cover rounded-lg"
+                        src="${video.thumbnail}" />
+                        <span class="text-white bg-black p-1 text-sm rounded-sm absolute right-4 bottom-4">3hrs 56 min ago</span>
+                    </figure>
+                    <div class="flex gap-2 py-5">
+                        <div class="avatar">
+                            <div class="w-12 h-12 rounded-full">
+                              <img src="${video.authors[0].profile_picture}" />
+                            </div>
+                          </div>
+                        <div>
+                            <h2 class="text-base font-bold text-black">${video.title}</h2>
+                            <p class="text-gray-500 font-medium flex gap-3 my-1">${video.authors[0].profile_name}<img class="${checkVerified(video.authors[0].verified)} w-5 h-5 object-cover" src="assets/verify.png" alt=""></p>
+                            <p class="text-gray-500">${video.others.views} views</p>
+                        </div>
+                    </div>
             </div>
         `
         videoSection.appendChild(div)
     });
 };
 
-// *----- Video time - 9.47 min --------------------------------
 
 // & ------- ⁡⁣⁣⁢Call Function⁡ ---------
 loadCategories();
