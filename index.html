@@ -10,19 +10,34 @@
 </head>
 <body>
     <header>
-        <nav class="max-w-[1320px] mx-auto flex justify-between items-center py-5 border-b-2 border-gray-300">
+        <nav class="max-w-[1320px] mx-auto flex justify-between items-center py-5 border-b-2 border-gray-300 px-4 lg:px-0">
             <div class="logo">
                 <img src="assets/Logo.png" alt="">
             </div>
             <div class="sort-btn">
                 <button class="bg-[#25252520] rounded-md text-lg px-5 py-2 font-medium cursor-pointer">Sort by view</button>
             </div>
-            <div class="blog-btn">
+            <div class="blog-btn hidden sm:block">
                 <button class="bg-[#FF1F3D] text-white rounded-md text-lg px-5 py-2 font-medium cursor-pointer hover:bg-black delay-150">Blog</button>
             </div>
         </nav>
     </header>
 
-    <main></main>
+    <main>
+        <div class="max-w-[1320px] mx-auto">
+
+            <nav id="categories-container" class="py-8 flex justify-center gap-6">
+                <button class="bg-[#FF1F3D] text-white rounded-md text-lg px-5 py-1 font-medium cursor-pointer">All</button>
+
+            </nav>
+
+
+            <section id="video-section">
+
+            </section>
+        </div>
+    </main>
+
+    <script src="index.js"></script>
 </body>
 </html>
