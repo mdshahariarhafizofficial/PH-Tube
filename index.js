@@ -1,11 +1,9 @@
 // ^ ---------- Load Categories ------------
-
 const loadCategories = ()=>{
     fetch('https://openapi.programming-hero.com/api/phero-tube/categories')
     .then(res => res.json())
     .then(data => displayCategories(data.categories))
 };
-
 // {
 //     "category_id": "1001",
 //     "video_id": "aaab",
@@ -31,7 +29,17 @@ const loadCategories = ()=>{
 const loadVideo = () => {
     fetch('https://openapi.programming-hero.com/api/phero-tube/videos')
     .then(res => res.json())
-    .then(data => displayVideos(data.videos))
+    .then(data => {
+        document.getElementById('all-btn').classList.add('active');
+        displayVideos(data.videos)
+    })
+};
+// ^----------- REmove Active class----------------
+const removeActiveClass = () =>{
+    const activeClass = document.getElementsByClassName('active');
+    for( let btn of activeClass ){
+        btn.classList.remove('active')
+    }
 };
 // ^ ---------- Load Categories Videos ------------
 const loadCategoriesVideo = (id) => {
@@ -39,7 +47,12 @@ const loadCategoriesVideo = (id) => {
     
     fetch(url)
     .then(res => res.json())
-    .then(data => displayVideos(data.category))
+    .then(data => {
+        removeActiveClass();
+        const activeCat = document.getElementById(`btn-${id}`)
+        activeCat.classList.add('active');
+        displayVideos(data.category)
+    }) 
 };
 
 // ! ---------- Display load Categories -----------
@@ -55,7 +68,7 @@ const  displayCategories = (categories) => {
         
         const div = document.createElement('div');
         div.innerHTML = `
-            <button onclick="loadCategoriesVideo(${cat.category_id})" class="bg-[#25252520] rounded-md text-lg px-5 py-1 font-medium cursor-pointer hover:bg-[#FF1F3D] hover:text-white delay-150">${category}</button>
+            <button id="btn-${cat.category_id}" onclick="loadCategoriesVideo(${cat.category_id})" class="bg-[#25252520] rounded-md text-lg px-5 py-1 font-medium cursor-pointer hover:bg-[#FF1F3D] hover:text-white delay-150">${category}</button>
         `
         categoriesContainer.appendChild(div)
     }
@@ -63,10 +76,20 @@ const  displayCategories = (categories) => {
 };
 // ! ---------- Display Load Videos ---------------
 const displayVideos = (videos) => {
+
     // Get video Section
     const videoSection = document.getElementById('video-section');
     videoSection.innerHTML = '';
-    
+    if (videos.length === 0) {
+        videoSection.innerHTML = `
+                <div class="col-span-full py-20 flex flex-col justify-center items-center">
+                    <img class="w-40" src="assets/Icon.png" alt="">
+                    <h2 class="my-5 text-3xl font-bold text-center">Oops!! Sorry, There is no content here</h2>
+                </div>
+        `
+        return
+    }
+
     videos.forEach((video)=>{
         const div = document.createElement('div');
         // console.log(video.authors[0].verified);
