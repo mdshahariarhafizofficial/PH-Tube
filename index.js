@@ -25,11 +25,21 @@ const loadCategories = ()=>{
 //     "description": "'Midnight Serenade' by Noah Walker is a soulful journey into the depths of the night, capturing the mystique and allure of a moonlit evening. With 543K views, this song brings together tender melodies and evocative lyrics, making it a favorite among listeners seeking a contemplative yet uplifting experience. Immerse yourself in this musical masterpiece and feel the calm embrace of the night."
 // }
 
+// https://openapi.programming-hero.com/api/phero-tube/category/1001
+
 // ^ ---------- Load Videos ------------
 const loadVideo = () => {
     fetch('https://openapi.programming-hero.com/api/phero-tube/videos')
     .then(res => res.json())
     .then(data => displayVideos(data.videos))
+};
+// ^ ---------- Load Categories Videos ------------
+const loadCategoriesVideo = (id) => {
+    const url = `https://openapi.programming-hero.com/api/phero-tube/category/${id}`;
+    
+    fetch(url)
+    .then(res => res.json())
+    .then(data => displayVideos(data.category))
 };
 
 // ! ---------- Display load Categories -----------
@@ -40,10 +50,12 @@ const  displayCategories = (categories) => {
 
     for( let cat of categories ){
         const category = cat.category;
-
+        // const catId = cat.category_id;
+        // console.log(catId);
+        
         const div = document.createElement('div');
         div.innerHTML = `
-            <button class="bg-[#25252520] rounded-md text-lg px-5 py-1 font-medium cursor-pointer hover:bg-[#FF1F3D] hover:text-white delay-150">${category}</button>
+            <button onclick="loadCategoriesVideo(${cat.category_id})" class="bg-[#25252520] rounded-md text-lg px-5 py-1 font-medium cursor-pointer hover:bg-[#FF1F3D] hover:text-white delay-150">${category}</button>
         `
         categoriesContainer.appendChild(div)
     }
@@ -52,7 +64,9 @@ const  displayCategories = (categories) => {
 // ! ---------- Display Load Videos ---------------
 const displayVideos = (videos) => {
     // Get video Section
-    const videoSection = document.getElementById('video-section');    
+    const videoSection = document.getElementById('video-section');
+    videoSection.innerHTML = '';
+    
     videos.forEach((video)=>{
         const div = document.createElement('div');
         // console.log(video.authors[0].verified);
@@ -93,4 +107,4 @@ const displayVideos = (videos) => {
 
 // & ------- ⁡⁣⁣⁢Call Function⁡ ---------
 loadCategories();
-loadVideo();
+// loadVideo();
