@@ -4,34 +4,26 @@ const loadCategories = ()=>{
     .then(res => res.json())
     .then(data => displayCategories(data.categories))
 };
-// {
-//     "category_id": "1001",
-//     "video_id": "aaab",
-//     "thumbnail": "https://i.ibb.co/QPNzYVy/moonlight.jpg",
-//     "title": "Midnight Serenade",
-//     "authors": [
-//         {
-//             "profile_picture": "https://i.ibb.co/fDbPv7h/Noha.jpg",
-//             "profile_name": "Noah Walker",
-//             "verified": false
-//         }
-//     ],
-//     "others": {
-//         "views": "543K",
-//         "posted_date": ""
-//     },
-//     "description": "'Midnight Serenade' by Noah Walker is a soulful journey into the depths of the night, capturing the mystique and allure of a moonlit evening. With 543K views, this song brings together tender melodies and evocative lyrics, making it a favorite among listeners seeking a contemplative yet uplifting experience. Immerse yourself in this musical masterpiece and feel the calm embrace of the night."
-// }
 
-// https://openapi.programming-hero.com/api/phero-tube/category/1001
+// Spinner
+const loadSpinner = ()=>{
+    const spinner = document.getElementById('loading-spinner');
+    spinner.classList.remove('hidden')
+}
+const removeSpinner = ()=>{
+    const spinner = document.getElementById('loading-spinner');
+    spinner.classList.add('hidden')
+}
 
 // ^ ---------- Load Videos ------------
 const loadVideo = (searchInput = '') => {
+    loadSpinner()
     fetch(`https://openapi.programming-hero.com/api/phero-tube/videos?title=${searchInput}`)
     .then(res => res.json())
     .then(data => {
         document.getElementById('all-btn').classList.add('active');
         displayVideos(data.videos)
+        removeSpinner();
     })
 };
 // Load Video Details
@@ -74,6 +66,7 @@ const removeActiveClass = () =>{
 };
 // ^ ---------- Load Categories Videos ------------
 const loadCategoriesVideo = (id) => {
+    loadSpinner()
     const url = `https://openapi.programming-hero.com/api/phero-tube/category/${id}`;
     
     fetch(url)
@@ -83,6 +76,7 @@ const loadCategoriesVideo = (id) => {
         const activeCat = document.getElementById(`btn-${id}`)
         activeCat.classList.add('active');
         displayVideos(data.category)
+        removeSpinner()
     }) 
 };
 
