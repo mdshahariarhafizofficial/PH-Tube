@@ -29,7 +29,7 @@
         </nav>
     </header>
 
-    <main>
+    <main id="main">
         <div class="max-w-[1320px] mx-auto">
 
             <nav id="categories-container" class="py-8 grid grid-cols-3 sm:flex sm:justify-center px-4 sm:px-0 gap-6">
@@ -43,6 +43,23 @@
             </section>
         </div>
     </main>
+
+    <!-- Modal -->
+     <!-- You can open the modal using ID.showModal() method -->
+        <!-- <button class="btn" onclick="my_modal_4.showModal()">open modal</button> -->
+        <dialog id="my_modal_4" class="modal">
+        <div class="modal-box w-5/12 max-w-5xl">
+            <div id="details-container">
+                
+            </div>
+            <div class="modal-action">
+            <form method="dialog">
+                <!-- if there is a button, it will close the modal -->
+                <button class="btn">Close</button>
+            </form>
+            </div>
+        </div>
+        </dialog>
 
     <script src="index.js"></script>
 </body>

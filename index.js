@@ -34,6 +34,37 @@ const loadVideo = () => {
         displayVideos(data.videos)
     })
 };
+// Load Video Details
+const loadVideoDetails = (video_id) =>{    
+    fetch(`https://openapi.programming-hero.com/api/phero-tube/video/${video_id}`)
+    .then( res => res.json())
+    .then( data => showVideoDetails(data))
+};
+// Show Video Details
+const showVideoDetails = (details) => {
+    // console.log(details);
+    document.getElementById('my_modal_4').showModal()
+    const detailsContainer = document.getElementById('details-container');
+    detailsContainer.innerHTML = 
+    `
+        <div class = 'border-1 border-red-300 p-5 rounded-xl'>
+            <div class='flex justify-between items-center mb-4'>
+                <div class = 'flex items-center gap-3'>
+                    <img class ='w-[40px] h-[40px] rounded-full' src="${details.video.authors[0].profile_picture}" /> 
+                    <p class="flex items-center gap-2 text-base text-gray-500 font-semibold my-4">${details.video.authors[0].profile_name} ${details.video.authors[0].verified? `<img class="w-5 h-5 object-cover" src='assets/verify.png' alt="">`: ''}</p>
+                </div>
+                <div class='flex gap-2 items-center'>
+                    <img class='w-8' src='assets/eye.png'>
+                    <p>Views: ${details.video.others.views}</p>
+                </div>
+            </div>
+            <img  class="w-full rounded-lg" src="${details.video.thumbnail}" />
+            <h1 class="text-3xl font-bold my-4">${details.video.title}</h1>
+            <p>${details.video.description}</p>
+        </div>
+    `
+}
+
 // ^----------- REmove Active class----------------
 const removeActiveClass = () =>{
     const activeClass = document.getElementsByClassName('active');
@@ -92,7 +123,6 @@ const displayVideos = (videos) => {
 
     videos.forEach((video)=>{
         const div = document.createElement('div');
-        // console.log(video.authors[0].verified);
         const checkVerified = very => {
             if (very === true) {
                 return "block"
@@ -121,6 +151,7 @@ const displayVideos = (videos) => {
                             <p class="text-gray-500">${video.others.views} views</p>
                         </div>
                     </div>
+                    <button onclick=loadVideoDetails('${video.video_id}') class="btn border-1 border-[#FF1F3D] text-[#FF1F3D]">Video Details....</button>
             </div>
         `
         videoSection.appendChild(div)
@@ -130,4 +161,4 @@ const displayVideos = (videos) => {
 
 // & ------- ⁡⁣⁣⁢Call Function⁡ ---------
 loadCategories();
-// loadVideo();
+loadVideo();
